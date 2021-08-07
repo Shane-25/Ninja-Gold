@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <p>Your Gold</p>
+        <p>{{ session['money'] }}</p>
+        <form action="/process_money" method="post">
+            <input type="hidden" name="which_form" value="reset">
+            <button>Reset</button>
+        </form>
+        <div class="row">
+            <div class="col border-dark border-2">
+                <form action="/process_money" method="post">
+                    <h3>Farm</h3>
+                    <p>(earns 10-20 golds)</p>
+                    <input type="hidden" name="which_form" value="farm">
+                    <button>Find Gold!</button>
+                </form>
+            </div>
+            <div class="col border-dark border-2">
+                <form action="/process_money" method="post">
+                    <h3>Cave</h3>
+                    <p>(earns 5-10 golds)</p>
+                    <input type="hidden" name="which_form" value="cave">
+                    <button>Find Gold!</button>
+                </form>
+            </div>
+            <div class="col border-dark border-2">
+                <form action="/process_money" method="post">
+                    <h3>House</h3>
+                    <p>(earns 2-5 golds)</p>
+                    <input type="hidden" name="which_form" value="house">
+                    <button>Find Gold!</button>
+                </form>
+            </div>
+            <div class="col border-dark border-2">
+                <form action="/process_money" method="post">
+                    <h3>Casino</h3>
+                    <p>(earns/takes 0-50 golds)</p>
+                    <input type="hidden" name="which_form" value="casino">
+                    <button>Find Gold!</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <h4>Activities:</h4>
+            <div class="box" style="overflow-y: auto; height: 300px;">
+                {% for i in range(len_act-1,-1,-1) %}
+                {% if act[i][0] > 0 %}
+                    <p class="text-success">Earned {{ act[i][0] }} gold from the {{ act[i][1] }} ({{act[i][2]}})</p>
+                {% elif act[i][0] < 0 %}
+                    <p class="text-danger">Entered a casino and lost {{act[i][0]}} ... Ouch.. </p>                 
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
